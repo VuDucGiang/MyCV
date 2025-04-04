@@ -3,6 +3,10 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  ssr: false,
+  nitro: {
+    preset: 'vercel'
+  },
   modules: [
     '@nuxt/icon',
     '@nuxtjs/google-fonts',
