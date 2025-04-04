@@ -27,7 +27,6 @@ export default defineNuxtConfig({
     display: 'swap'
   },
   app: {
-    baseURL: '/my-cv-nuxt/',
     head: {
       title: 'Vu Duc Giang - Full Stack Developer',
       meta: [
