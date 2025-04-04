@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-inter antialiased bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-200;
+  }
+}
+
+@layer components {
+  .section-title {
+    @apply text-2xl font-bold mb-6 text-gray-900 dark:text-white;
+  }
+  
+  .skill-tag {
+    @apply px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200;
+  }
+  
+  .contact-item {
+    @apply flex items-center gap-2 text-gray-600 dark:text-gray-300;
+  }
+  
+  .timeline-item {
+    @apply relative pl-6 pb-6 border-l-2 border-gray-200 dark:border-gray-700 last:border-l-0;
+  }
+  
+  .timeline-dot {
+    @apply absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-blue-500;
+  }
+}

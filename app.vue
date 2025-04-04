@@ -1,16 +1,9 @@
-<template lang="">
-  <MyCV>
-    
-  </MyCV>
+<template>
+  <div>
+    <MyCV />
+  </div>
 </template>
-<script>
-import MyCV from './src/view/MyCV.vue';
-export default {
-  components: {
-    MyCV
-  }
-}
-</script>
-<style lang="">
 
-</style>
+<script setup>
+import MyCV from './src/view/MyCV.vue'
+</script>
