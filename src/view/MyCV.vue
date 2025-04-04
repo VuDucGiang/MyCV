@@ -2,25 +2,67 @@
   <div class="min-h-screen p-4 md:p-8">
     <!-- Dark Mode Toggle -->
     <button @click="toggleDarkMode" 
-            class="fixed top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
-      <Icon v-if="isDarkMode" name="ph:sun-bold" class="w-6 h-6" />
-      <Icon v-else name="ph:moon-bold" class="w-6 h-6" />
+            class="fixed top-4 right-4 w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center transition-colors">
+      <Icon v-if="isDarkMode" name="ph:sun-bold" class="w-5 h-5" />
+      <Icon v-else name="ph:moon-bold" class="w-5 h-5" />
     </button>
 
     <!-- CV Container -->
     <div class="max-w-cv mx-auto bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden">
       <!-- Header Section -->
-      <header class="bg-blue-600 text-white p-8">
-        <h1 class="text-4xl font-bold mb-2">Vu Duc Giang</h1>
-        <h2 class="text-2xl mb-4">Full Stack Developer</h2>
-        <div class="flex flex-col md:flex-row gap-4">
-          <div class="contact-item">
-            <Icon name="ph:phone-bold" />
-            <a href="tel:0384043718">0384043718</a>
-          </div>
-          <div class="contact-item">
-            <Icon name="ph:envelope-simple-bold" />
-            <a href="mailto:ducgiang1.nd1808@gmail.com">ducgiang1.nd1808@gmail.com</a>
+      <header class="relative bg-gradient-to-br from-blue-600 to-blue-400 text-gray-50 p-8 md:p-12 rounded-t-xl overflow-hidden">
+        <div 
+          class="absolute inset-0 opacity-5 blur-xl bg-cover bg-center transition-all duration-300"
+          :style="{ backgroundImage: `url('${avatar || defaultAvatarUrl}')` }"
+        ></div>
+        <div class="relative">
+          <div class="grid md:grid-cols-[200px_1fr] gap-8 items-center">
+            <!-- Avatar Section -->
+            <div class="animate-fadeIn flex justify-center md:justify-start">
+              <AvatarUpload
+                alt="Vu Duc Giang"
+                v-model="avatar"
+              />
+            </div>
+
+            <!-- Info Section -->
+            <div class="text-center md:text-left space-y-6 animate-slideUp">
+              <div>
+                <h1 class="text-4xl font-bold mb-2 text-white drop-shadow-sm">Vu Duc Giang</h1>
+                <h2 class="text-2xl text-blue-50/90">Full Stack Developer</h2>
+              </div>
+              
+              <div class="flex flex-col md:flex-row items-center gap-6">
+                <a href="tel:0384043718" class="contact-item group transition-all hover:text-white">
+                  <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 bg-white/15 rounded-full group-hover:bg-blue-400/30 transition-colors flex items-center justify-center">
+                      <Icon name="ph:phone-bold" class="w-5 h-5 text-blue-50" />
+                    </div>
+                    <span class="text-blue-50 group-hover:text-white transition-colors">0384043718</span>
+                  </div>
+                </a>
+                <a href="mailto:ducgiang1.nd1808@gmail.com" class="contact-item group transition-all hover:text-white">
+                  <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 bg-white/15 rounded-full group-hover:bg-blue-400/30 transition-colors flex items-center justify-center">
+                      <Icon name="ph:envelope-simple-bold" class="w-5 h-5 text-blue-50" />
+                    </div>
+                    <span class="text-blue-50 group-hover:text-white transition-colors">ducgiang1.nd1808@gmail.com</span>
+                  </div>
+                </a>
+              </div>
+              
+              <!-- Social Links -->
+              <div class="flex justify-center md:justify-start gap-4">
+                <a href="https://github.com/yourusername" target="_blank" 
+                   class="w-9 h-9 bg-white/15 rounded-full hover:bg-blue-400/30 transition-all hover:scale-110 flex items-center justify-center">
+                  <Icon name="ph:github-logo-bold" class="w-5 h-5 text-blue-50" />
+                </a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" 
+                   class="w-9 h-9 bg-white/15 rounded-full hover:bg-blue-400/30 transition-all hover:scale-110 flex items-center justify-center">
+                  <Icon name="ph:linkedin-logo-bold" class="w-5 h-5 text-blue-50" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -160,13 +202,24 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import AvatarUpload from '~/components/AvatarUpload.vue'
 
 const colorMode = useColorMode()
 const isDarkMode = ref(colorMode.value === 'dark')
+const avatar = ref<string | null>(null)
+const defaultAvatarUrl = 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vu%20Duc%20Giang'
 
 const toggleDarkMode = () => {
   colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
 }
+
+onMounted(() => {
+  // Load saved avatar from localStorage
+  const savedAvatar = localStorage.getItem('userAvatar')
+  if (savedAvatar) {
+    avatar.value = savedAvatar
+  }
+})
 </script>
