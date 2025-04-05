@@ -13,8 +13,9 @@
         :alt="alt"
         class="w-full h-full object-cover"
       />
-      <!-- Upload overlay -->
+      <!-- Upload overlay - only show when not readonly -->
       <div
+        v-if="!readonly"
         @click="triggerUpload"
         class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all cursor-pointer flex items-center justify-center"
       >
@@ -36,9 +37,11 @@ import { ref, onMounted } from 'vue'
 const props = withDefaults(defineProps<{
   modelValue: string | null;
   alt: string;
+  readonly?: boolean;
 }>(), {
   modelValue: null,
-  alt: ''
+  alt: '',
+  readonly: false
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -49,7 +52,7 @@ const updateValue = (val: string) => {
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const isUploading = ref(false)
-const defaultAvatar = 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vu%20Duc%20Giang'
+const defaultAvatar = '/images/avatar.jpg'
 
 const triggerUpload = () => {
   fileInput.value?.click()

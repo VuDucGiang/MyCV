@@ -2,7 +2,7 @@
   <div class="min-h-screen p-4 md:p-8">
     <!-- Dark Mode Toggle -->
     <button @click="toggleDarkMode" 
-            class="fixed top-4 right-4 w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 flex items-center justify-center transition-colors">
+            class="fixed top-4 right-4 w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 hover:scale-110 flex items-center justify-center transition-all">
       <Icon v-if="isDarkMode" name="ph:sun-bold" class="w-5 h-5" />
       <Icon v-else name="ph:moon-bold" class="w-5 h-5" />
     </button>
@@ -22,6 +22,7 @@
               <AvatarUpload
                 alt="Vu Duc Giang"
                 v-model="avatar"
+                readonly
               />
             </div>
 
@@ -53,11 +54,11 @@
               
               <!-- Social Links -->
               <div class="flex justify-center md:justify-start gap-4">
-                <a href="https://github.com/yourusername" target="_blank" 
+                <a href="https://github.com/VuDucGiang" target="_blank" 
                    class="w-9 h-9 bg-white/15 rounded-full hover:bg-blue-400/30 transition-all hover:scale-110 flex items-center justify-center">
                   <Icon name="ph:github-logo-bold" class="w-5 h-5 text-blue-50" />
                 </a>
-                <a href="https://linkedin.com/in/yourusername" target="_blank" 
+                <a href="https://www.linkedin.com/in/vu-giang-167785304" target="_blank" 
                    class="w-9 h-9 bg-white/15 rounded-full hover:bg-blue-400/30 transition-all hover:scale-110 flex items-center justify-center">
                   <Icon name="ph:linkedin-logo-bold" class="w-5 h-5 text-blue-50" />
                 </a>
@@ -199,6 +200,15 @@
         </section>
       </main>
     </div>
+
+    <!-- Download CV Button -->
+    <button 
+      @click="handleDownloadCV"
+      class="fixed bottom-8 right-8 flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all hover:scale-105 shadow-lg"
+    >
+      <Icon name="ph:download-bold" class="w-5 h-5" />
+      <span>Download CV</span>
+    </button>
   </div>
 </template>
 
@@ -209,10 +219,19 @@ import AvatarUpload from '~/components/AvatarUpload.vue'
 const colorMode = useColorMode()
 const isDarkMode = ref(colorMode.value === 'dark')
 const avatar = ref<string | null>(null)
-const defaultAvatarUrl = 'https://api.dicebear.com/7.x/avataaars/svg?seed=Vu%20Duc%20Giang'
+const defaultAvatarUrl = '/images/avatar.jpg'
 
 const toggleDarkMode = () => {
   colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
+}
+
+const handleDownloadCV = () => {
+  const link = document.createElement('a')
+  link.href = '/files/FullStack_Developer_VuDucGiang.pdf'
+  link.download = 'FullStack_Developer_VuDucGiang.pdf'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
 }
 
 onMounted(() => {
